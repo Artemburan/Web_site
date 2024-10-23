@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Підтвердження замовлення</title>
+    <style>
+        body {
+            background-color: #212529;
+            color: white;
+        }
+        .table {
+            background-color: #000000;
+            color: white;
+            border: 1px solid #444;
+        }
+        .table th, .table td {
+            border-color: #444;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #1a1a1a;
+        }
+        .table-striped tbody tr:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="mt-5">Дякуємо за ваше замовлення!</h1>
+        <h2 class="mt-3">Деталі замовлення:</h2>
+        <table class="table table-dark mt-3">
+            <thead>
+                <tr>
+                    <th>Назва піци</th>
+                    <th>Кількість</th>
+                    <th>Ціна</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pizza, quantity in order_summary.items() %}
+                    <tr>
+                        <td>{{ pizza }}</td>
+                        <td>{{ quantity }}</td>
+                        <td>{{ pizzas[pizza]['price'] * quantity }} грн</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2"><strong>Загальна вартість:</strong></td>
+                    <td><strong>{{ total_price }} грн</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Ваші дані:</h3>
+        <p>Ім'я: {{ order_details['name'] }}</p>
+        <p>Електронна пошта: {{ order_details['email'] }}</p>
+        <p>Адреса: {{ order_details['address'] }}</p>
+        <p>Телефон: {{ order_details['phone_prefix'] }}{{ order_details['phone'] }}</p>
+        <p>Країна: {{ order_details['country'] }}</p>
+        <p>Місто: {{ order_details['city'] }}</p>
+
+        <h3>Час доставки:</h3>
+        <p>{{ delivery_time }}</p>
+
+        <a href="{{ url_for('index') }}" class="btn btn-outline-warning mt-4">На головну</a>
+        <a href="/menu" class="btn btn-outline-warning mt-4">В меню</a>
+    </div>
+</body>
+</html>
