@@ -49,7 +49,8 @@ def confirm_order():
 
         print(f"Дані користувача: {name}, {email}, {address}, {phone_prefix} {phone}, {country}, {city}")
 
-        pizzas_ordered = request.form.getlist('order_summary')
+        #pizzas_ordered = request.form.getlist('order_summary')
+        pizzas_ordered = session.get('cart')
         print("Замовлені піци: ", pizzas_ordered)
 
         if not pizzas_ordered:

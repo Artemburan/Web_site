@@ -65,7 +65,7 @@
             <p>Ваша знижка: {{ discount_amount }} грн</p>
             <p><strong>Сума з урахуванням знижки: {{ total_price - discount_amount }} грн</strong></p>
         {% endif %}
-        
+
         <a href="{{ url_for('index') }}" class="btn btn-outline-warning mt-4">На головну</a>
         <a href="/menu/" class="btn btn-outline-warning mt-4">В меню</a>
     </div>

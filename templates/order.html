@@ -7,8 +7,8 @@
     <title>Оформлення замовлення</title>
     <style>
         body {
-            background-color: #212529;
-            color: white;
+            background-color: #F5F5DC;
+            color: dark;
         }
         .form-group {
             margin-bottom: 1.5rem;
@@ -101,7 +101,7 @@
                 <label for="discount_code">Код знижки:</label>
                 <input type="text" name="discount_code" class="form-control" placeholder="Введіть код знижки">
             </div>
-            <input type="hidden" name="order_summary" value="{{ order_summary }}">  <!-- Приховане поле -->
+            <input type="hidden" name="order_summary" value="{{ order_summary }}">
             <input type="submit" class="btn btn-outline-success mt-4" value="Підтвердити замовлення">
             <a href="{{ url_for('index') }}" class="btn btn-outline-warning mt-4">На головну</a>
             <a href="/menu/" class="btn btn-outline-warning mt-4">В меню</a>
