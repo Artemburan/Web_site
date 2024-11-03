@@ -1,119 +1,99 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Оформлення замовлення</title>
-    <style>
-        body {
-            background-color: #F5F5DC;
-            color: dark;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .table {
-            background-color: #343a40;
-        }
-    </style>
-</head>
-<body>
-    <div class="container text-center">
-        <h1 class="mt-5">Оформлення замовлення</h1>
-        <form action="/confirm_order" method="POST">
-            <div class="form-group">
-                <label for="name">Ваше ім'я:</label>
-                <input type="text" name="name" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Електронна пошта:</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Телефон:</label>
-                <div class="input-group">
-                    <select name="phone_prefix" class="form-control" required>
-                        <option value="" disabled selected>Оберіть код</option>
-                        <option value="+380">Україна (+38)</option>
-                        <option value="+1">Канада (+1)</option>
-                        <option value="+33">Франція (+33)</option>
-                        <option value="+32">Бельгія (+32)</option>
-                        <option value="+55">Бразилія (+55)</option>
-                    </select>
-                    <input type="tel" name="phone" class="form-control" placeholder="Наприклад: 123456789" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="country">Країна:</label>
-                <select name="country" class="form-control" required>
-                    <option value="" disabled selected>Оберіть країну</option>
-                    <option value="Україна">Україна</option>
-                    <option value="Канада">Канада</option>
-                    <option value="Франція">Франція</option>
-                    <option value="Бельгія">Бельгія</option>
-                    <option value="Бразілія">Бразілія</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="city">Місто:</label>
-                <select name="city" class="form-control" required>
-                    <option value="" disabled selected>Оберіть місто</option>
-                    <option value="Київ">Київ</option>
-                    <option value="Львів">Львів</option>
-                    <option value="Одеса">Одеса</option>
-                    <option value="Харків">Харків</option>
-                    <option value="Дніпро">Дніпро</option>
-                    <option value="Торонто">Торонто</option>
-                    <option value="Ванкувер">Ванкувер</option>
-                    <option value="Монреаль">Монреаль</option>
-                    <option value="Оттава">Оттава</option>
-                    <option value="Париж">Париж</option>
-                    <option value="Марсель">Марсель</option>
-                    <option value="Ліон">Ліон</option>
-                    <option value="Брюсель">Брюсель</option>
-                    <option value="Антверпен">Антверпен</option>
-                    <option value="Гент">Гент</option>
-                    <option value="Сан-Паулу">Сан-Паулу</option>
-                    <option value="Ріо-де-Жанейро">Ріо-де-Жанейро</option>
-                    <option value="Бразіліа">Бразіліа</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="address">Адреса:</label>
-                <input type="text" name="address" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="delivery_option">Вибір доставки:</label>
-                <select name="delivery_option" class="form-control" id="delivery_option" onchange="togglePickupTime()" required>
-                    <option value="" disabled selected>Оберіть спосіб доставки</option>
-                    <option value="delivery">Доставка</option>
-                    <option value="pickup">Заберете самі</option>
-                </select>
-            </div>
-            <div id="pickup_message" class="mt-3" style="display:none;">
-                <h4>Піца буде готова через 20 хвилин.</h4>
-            </div>
-            <div id="delivery_message" class="mt-3" style="display:none;">
-                <h4>Доставка займе приблизно 30-40 хвилин.</h4>
-            </div>
-            <div class="form-group">
-                <label for="discount_code">Код знижки:</label>
-                <input type="text" name="discount_code" class="form-control" placeholder="Введіть код знижки">
-            </div>
-            <input type="hidden" name="order_summary" value="{{ order_summary }}">
-            <input type="submit" class="btn btn-outline-success mt-4" value="Підтвердити замовлення">
-            <a href="{{ url_for('index') }}" class="btn btn-outline-warning mt-4">На головну</a>
-            <a href="/menu/" class="btn btn-outline-warning mt-4">В меню</a>
-        </form>
-    </div>
-    <script>
-        function togglePickupTime() {
-            const deliveryOption = document.getElementById('delivery_option').value;
-            document.getElementById('pickup_message').style.display = deliveryOption === 'pickup' ? 'block' : 'none';
-            document.getElementById('delivery_message').style.display = deliveryOption === 'delivery' ? 'block' : 'none';
-        }
-    </script>
-</body>
-</html>
+{% extends "base.html" %}
 
+{% block title %}Оформлення замовлення{% endblock %}
+
+{% block content %}
+<h1 class="mt-5">Оформлення замовлення</h1>
+<form action="/confirm_order" method="POST">
+    <div class="form-group">
+        <label for="name">Ваше ім'я:</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Електронна пошта:</label>
+        <input type="email" name="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Телефон:</label>
+        <div class="input-group">
+            <select name="phone_prefix" class="form-control" required>
+                <option value="" disabled selected>Оберіть код</option>
+                <option value="+380">Україна (+38)</option>
+                <option value="+1">Канада (+1)</option>
+                <option value="+33">Франція (+33)</option>
+                <option value="+32">Бельгія (+32)</option>
+                <option value="+55">Бразилія (+55)</option>
+            </select>
+            <input type="tel" name="phone" class="form-control" placeholder="Наприклад: 123456789" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="country">Країна:</label>
+        <select name="country" class="form-control" required>
+            <option value="" disabled selected>Оберіть країну</option>
+            <option value="Україна">Україна</option>
+            <option value="Канада">Канада</option>
+            <option value="Франція">Франція</option>
+            <option value="Бельгія">Бельгія</option>
+            <option value="Бразілія">Бразілія</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="city">Місто:</label>
+        <select name="city" class="form-control" required>
+            <option value="" disabled selected>Оберіть місто</option>
+            <option value="Київ">Київ</option>
+            <option value="Львів">Львів</option>
+            <option value="Одеса">Одеса</option>
+            <option value="Харків">Харків</option>
+            <option value="Дніпро">Дніпро</option>
+            <option value="Торонто">Торонто</option>
+            <option value="Ванкувер">Ванкувер</option>
+            <option value="Монреаль">Монреаль</option>
+            <option value="Оттава">Оттава</option>
+            <option value="Париж">Париж</option>
+            <option value="Марсель">Марсель</option>
+            <option value="Ліон">Ліон</option>
+            <option value="Брюсель">Брюсель</option>
+            <option value="Антверпен">Антверпен</option>
+            <option value="Гент">Гент</option>
+            <option value="Сан-Паулу">Сан-Паулу</option>
+            <option value="Ріо-де-Жанейро">Ріо-де-Жанейро</option>
+            <option value="Бразіліа">Бразіліа</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="address">Адреса:</label>
+        <input type="text" name="address" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="delivery_option">Вибір доставки:</label>
+        <select name="delivery_option" class="form-control" id="delivery_option" onchange="togglePickupTime()" required>
+            <option value="" disabled selected>Оберіть спосіб доставки</option>
+            <option value="delivery">Доставка</option>
+            <option value="pickup">Заберете самі</option>
+        </select>
+    </div>
+    <div id="pickup_message" class="mt-3" style="display:none;">
+        <h4>Піца буде готова через 20 хвилин.</h4>
+    </div>
+    <div id="delivery_message" class="mt-3" style="display:none;">
+        <h4>Доставка займе приблизно 30-40 хвилин.</h4>
+    </div>
+    <div class="form-group">
+        <label for="discount_code">Код знижки:</label>
+        <input type="text" name="discount_code" class="form-control" placeholder="Введіть код знижки">
+    </div>
+    <input type="hidden" name="order_summary" value="{{ order_summary }}">
+    <input type="submit" class="btn btn-outline-success mt-4" value="Підтвердити замовлення">
+    <a href="{{ url_for('index') }}" class="btn btn-outline-warning mt-4">На головну</a>
+    <a href="/menu/" class="btn btn-outline-warning mt-4">В меню</a>
+</form>
+<script>
+    function togglePickupTime() {
+        const deliveryOption = document.getElementById('delivery_option').value;
+        document.getElementById('pickup_message').style.display = deliveryOption === 'pickup' ? 'block' : 'none';
+        document.getElementById('delivery_message').style.display = deliveryOption === 'delivery' ? 'block' : 'none';
+    }
+</script>
+{% endblock %}
